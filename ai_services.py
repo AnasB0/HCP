@@ -6,7 +6,8 @@ import streamlit as st
 import sqlite3
 import json
 
-from config import API_KEY, MODEL_NAME, DATABASE, DRUG_DB, PALM_SETTINGS, PROM_DB
+from config import MODEL_NAME, DATABASE, DRUG_DB, PALM_SETTINGS, PROM_DB
+import streamlit as st  # Ensure st is available for secrets
 from models.risk_predictor import RiskPredictor
 from models.patient_cluster import PatientCluster
 from models.anomaly_detector import AnomalyDetector
@@ -30,7 +31,7 @@ class HealthAssistant:
     def _call_ai_api(self, messages):
         try:
             headers = {
-                "Authorization": f"Bearer {API_KEY}",
+                "Authorization": f"Bearer {st.secrets.get('API_KEY', 'fallback-key')}",
                 "Content-Type": "application/json"
             }
 
